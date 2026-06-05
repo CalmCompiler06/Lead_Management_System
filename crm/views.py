@@ -1,6 +1,7 @@
-from .models import Product, Region
-from .forms import ProductForm, RegionForm
+from .models import Product, Region, Lead
+from .forms import ProductForm, RegionForm, LeadForm
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
 
 def home(request):
     return render(request, 'home.html')
@@ -23,7 +24,13 @@ def add_product(request):
         form = ProductForm(request.POST)
 
         if form.is_valid():
-            form.save()
+
+            product = form.save(commit=False)
+
+            product.added_by = "Vedika"
+            product.added_dts = timezone.now()
+
+            product.save()
 
             return redirect('product_list')
 
@@ -110,9 +117,15 @@ def add_region(request):
         form = RegionForm(request.POST)
 
         if form.is_valid():
-            form.save()
-            return redirect('region_list')
 
+            region = form.save(commit=False)
+
+            region.added_by = "Vedika"
+            region.added_dts = timezone.now()
+
+            region.save()
+
+            return redirect('region_list')
     else:
         form = RegionForm()
 
@@ -170,3 +183,96 @@ def delete_region(request, id):
     region.delete()
 
     return redirect('region_list')
+
+
+def lead_list(request):
+
+    leads = Lead.objects.all()
+
+    return render(
+        request,
+        'lead/lead_list.html',
+        {
+            'leads': leads
+        }
+    )
+
+def add_lead(request):
+
+    if request.method == 'POST':
+
+        form = LeadForm(request.POST)
+
+        if form.is_valid():
+
+            lead = form.save(commit=False)
+
+            lead.added_by = "Vedika"
+            lead.added_dts = timezone.now()
+
+            lead.save()
+
+            return redirect('lead_list')
+
+    else:
+
+        form = LeadForm()
+
+    return render(
+        request,
+        'lead/lead_form.html',
+        {
+            'form': form,
+            'title': 'Add Lead'
+        }
+    )
+def edit_lead(request, id):
+
+    lead = get_object_or_404(
+        Lead,
+        pk=id
+    )
+
+    if request.method == 'POST':
+
+        form = LeadForm(
+            request.POST,
+            instance=lead
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect(
+                'lead_list'
+            )
+
+    else:
+
+        form = LeadForm(
+            instance=lead
+        )
+
+    return render(
+        request,
+        'lead/lead_form.html',
+        {
+            'form': form,
+            'title': 'Edit Lead'
+        }
+    )
+
+
+def delete_lead(request, id):
+
+    lead = get_object_or_404(
+        Lead,
+        pk=id
+    )
+
+    lead.delete()
+
+    return redirect(
+        'lead_list'
+    )

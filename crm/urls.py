@@ -13,4 +13,10 @@ urlpatterns = [
     path('regions/edit/<int:id>/', views.edit_region, name='edit_region'),
     path('regions/delete/<int:id>/', views.delete_region, name='delete_region'),
 
+    path('leads/',views.lead_list,name='lead_list'),
+
+    path('leads/add/',views.add_lead,name='add_lead'),
+    path('leads/edit/<int:id>/',views.edit_lead,name='edit_lead'),
+
+    path('leads/delete/<int:id>/',views.delete_lead,name='delete_lead'),
 ]

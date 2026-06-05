@@ -55,7 +55,9 @@ class LeadSource(models.Model):
     leadsourcename = models.CharField(db_column='LeadSourceName', max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_by = models.CharField(db_column='Added_By', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_dts = models.DateTimeField(db_column='Added_Dts', blank=True, null=True)  # Field name made lowercase.
-
+    
+    def __str__(self):
+        return f"{self.leadsourceid} - {self.leadsourcename}"
     class Meta:
         managed = False
         db_table = 'LEAD_SOURCE'
@@ -66,7 +68,9 @@ class LeadStatus(models.Model):
     statusname = models.CharField(db_column='StatusName', max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_by = models.CharField(db_column='Added_By', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_dts = models.DateTimeField(db_column='Added_Dts', blank=True, null=True)  # Field name made lowercase.
-
+    
+    def __str__(self):
+        return f"{self.statusid} - {self.statusname}"
     class Meta:
         managed = False
         db_table = 'LEAD_STATUS'
@@ -79,10 +83,14 @@ class Product(models.Model):
     is_active = models.SmallIntegerField(db_column='Is_Active', blank=True, null=True)  # Field name made lowercase.
     added_by = models.CharField(db_column='Added_By', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_dts = models.DateTimeField(db_column='Added_Dts', blank=True, null=True)  # Field name made lowercase.
+    
+    def __str__(self):
+        return f"{self.productid} - {self.productname}"
 
     class Meta:
         managed = False
         db_table = 'PRODUCT'
+
 
 
 class ProductCategory(models.Model):
@@ -90,6 +98,9 @@ class ProductCategory(models.Model):
     categoryname = models.CharField(db_column='CategoryName', max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_by = models.CharField(db_column='Added_By', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_dts = models.DateTimeField(db_column='Added_Dts', blank=True, null=True)  # Field name made lowercase.
+ 
+    def __str__(self):
+        return f"{self.categoryid} - {self.categoryname}"
 
     class Meta:
         managed = False
@@ -101,6 +112,9 @@ class Region(models.Model):
     regionname = models.CharField(db_column='RegionName', max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_by = models.CharField(db_column='Added_By', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_dts = models.DateTimeField(db_column='Added_Dts', blank=True, null=True)  # Field name made lowercase.
+    
+    def __str__(self):
+        return f"{self.regionid}-{self.regionname}"
 
     class Meta:
         managed = False
@@ -113,7 +127,9 @@ class Territory(models.Model):
     regionid = models.ForeignKey(Region, models.DO_NOTHING, db_column='RegionID', blank=True, null=True)  # Field name made lowercase.
     added_by = models.CharField(db_column='Added_By', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     added_dts = models.DateTimeField(db_column='Added_Dts', blank=True, null=True)  # Field name made lowercase.
-
+    
+    def __str__(self):
+        return f"{self.territoryid} - {self.territoryname}"
     class Meta:
         managed = False
         db_table = 'TERRITORY'

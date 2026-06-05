@@ -11,6 +11,8 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Product Category</th>
+        <th>Is_Active</th>
         <th>Actions</th>
     </tr>
 
@@ -19,11 +21,13 @@
 
         <td>{{ product.productid }}</td>
         <td>{{ product.productname }}</td>
+        <td>{{ product.categoryid }}</td>
+        <td>{{product.is_active }}</td>
 
         <td>
 
             <a href="{% url 'edit_product' product.productid %}"
-               class="btn btn-warning btn-sm">
+               class="btn btn-warning btn-sm" style="background-color: rgb(60, 196, 246); border-color:rgb(60, 196, 246) ;">
                 Edit
             </a>
 
