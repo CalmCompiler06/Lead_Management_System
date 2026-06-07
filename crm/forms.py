@@ -8,6 +8,7 @@ class ProductForm(forms.ModelForm):
         model = Product
 
         exclude = [
+            'productid',
             'added_by',
             'added_dts'
         ]
@@ -19,6 +20,7 @@ class RegionForm(forms.ModelForm):
         model = Region
 
         exclude = [
+            'regionid',
             'added_by',
             'added_dts'
         ]
@@ -29,7 +31,7 @@ class LeadForm(forms.ModelForm):
     class Meta:
         model = Lead
 
-        exclude = ['added_by', 'added_dts']
+        exclude = ['leadid','added_by', 'added_dts']
 
         widgets = {
             'lead_gen_date': forms.DateInput(

@@ -1,7 +1,9 @@
+import getpass;
 from .models import Product, Region, Lead
 from .forms import ProductForm, RegionForm, LeadForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.db.models import Max
 
 def home(request):
     return render(request, 'home.html')
@@ -16,7 +18,6 @@ def product_list(request):
         {'products': products}
     )
 
-
 def add_product(request):
 
     if request.method == 'POST':
@@ -27,7 +28,13 @@ def add_product(request):
 
             product = form.save(commit=False)
 
-            product.added_by = "Vedika"
+            max_id = Product.objects.aggregate(
+                Max('productid')
+            )['productid__max']
+
+            product.productid = (max_id or 0) + 1
+
+            product.added_by = getpass.getuser()
             product.added_dts = timezone.now()
 
             product.save()
@@ -119,8 +126,10 @@ def add_region(request):
         if form.is_valid():
 
             region = form.save(commit=False)
+            max_id = Region.objects.aggregate( Max('regionid'))['regionid__max']
 
-            region.added_by = "Vedika"
+            region.regionid = (max_id or 0) + 1
+            region.added_by = getpass.getuser()
             region.added_dts = timezone.now()
 
             region.save()
@@ -206,8 +215,10 @@ def add_lead(request):
         if form.is_valid():
 
             lead = form.save(commit=False)
+            max_id = Lead.objects.aggregate(Max('leadid'))['leadid__max']
 
-            lead.added_by = "Vedika"
+            lead.leadid = (max_id or 0) + 1
+            lead.added_by = getpass.getuser()
             lead.added_dts = timezone.now()
 
             lead.save()
