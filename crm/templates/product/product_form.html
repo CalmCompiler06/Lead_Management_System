@@ -2,21 +2,41 @@
 
 {% block content %}
 
-<h2>{{ title }}</h2>
+<div class="row justify-content-center">
 
-<form method="post">
+    <div class="col-md-8">
 
-    {% csrf_token %}
+        <div class="card shadow-lg border-0">
 
-    {{ form.as_p }}
+            <div class="card-header card-header-theme">
 
-    <button type="submit"
-            class="btn btn-primary">
+                <h4>{{ title }}</h4>
 
-        Save
+            </div>
 
-    </button>
+            <div class="card-body">
 
-</form>
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button type="submit"
+                            class="btn btn-theme">
+
+                        Save
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

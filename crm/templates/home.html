@@ -4,29 +4,39 @@
 
 <div class="text-center mb-5">
 
-    <h1 class="fw-bold">
+    <h1 class="fw-bold display-5">
         Lead Management System
     </h1>
+
+    <p class="text-muted fs-5">
+        Manage Products, Regions and Leads from one dashboard
+    </p>
 
 </div>
 
 <div class="row g-4">
 
+    <!-- Products -->
+
     <div class="col-md-4">
 
-        <div class="card shadow h-100">
+        <div class="card shadow-lg h-100">
 
-            <div class="card-body text-center">
+            <div class="card-body text-center p-4">
 
-                <h3>Products</h3>
+                <h3 class="fw-bold">
+                    Products
+                </h3>
 
                 <p class="text-muted">
-                    Manage product records
+                    Add, update and manage product records.
                 </p>
 
                 <a href="{% url 'product_list' %}"
-                   class="btn btn-primary">
+                   class="btn btn-theme">
+
                     Open Products
+
                 </a>
 
             </div>
@@ -35,21 +45,27 @@
 
     </div>
 
+    <!-- Regions -->
+
     <div class="col-md-4">
 
-        <div class="card shadow h-100">
+        <div class="card shadow-lg h-100">
 
-            <div class="card-body text-center">
+            <div class="card-body text-center p-4">
 
-                <h3>Regions</h3>
+                <h3 class="fw-bold">
+                    Regions
+                </h3>
 
                 <p class="text-muted">
-                    Manage region records
+                    Maintain region information and mappings.
                 </p>
 
                 <a href="{% url 'region_list' %}"
-                   class="btn btn-success">
+                   class="btn btn-theme">
+
                     Open Regions
+
                 </a>
 
             </div>
@@ -58,21 +74,27 @@
 
     </div>
 
+    <!-- Leads -->
+
     <div class="col-md-4">
 
-        <div class="card shadow h-100">
+        <div class="card shadow-lg h-100">
 
-            <div class="card-body text-center">
+            <div class="card-body text-center p-4">
 
-                <h3>Leads</h3>
+                <h3 class="fw-bold">
+                    Leads
+                </h3>
 
                 <p class="text-muted">
-                    Manage lead records
+                    Create, track and manage customer leads.
                 </p>
 
                 <a href="{% url 'lead_list' %}"
-                   class="btn btn-warning">
+                   class="btn btn-theme">
+
                     Open Leads
+
                 </a>
 
             </div>

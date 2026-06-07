@@ -28,16 +28,6 @@
             font-weight:500;
         }
 
-        .dropdown-menu{
-            border:none;
-            border-radius:12px;
-            box-shadow:0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .dropdown-item:hover{
-            background:#eef4ff;
-        }
-
         .page-container{
             margin-top:30px;
         }
@@ -57,20 +47,75 @@
             border-radius:10px;
         }
 
+        .card-header-theme{
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    color:white;
+    font-weight:600;
+}
+
+.btn-theme{
+    background:#2a5298;
+    color:white;
+    border:none;
+}
+
+.btn-theme:hover{
+    background:#1e3c72;
+    color:white;
+}
+
+.table thead{
+    background:#2a5298;
+    color:white;
+}
+
+.form-control,
+.form-select{
+    border-radius:10px;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#2a5298;
+    box-shadow:0 0 0 0.2rem rgba(42,82,152,.25);
+}
+.btn-edit{
+    background:#0dcaf0;
+    color:white;
+    border:none;
+}
+
+.btn-edit:hover{
+    background:#0aa2c0;
+    color:white;
+}
+label{
+    font-weight:600;
+    margin-bottom:5px;
+}
+
+.form-control{
+    border-radius:10px;
+}
+
+.form-control:focus{
+    border-color:#2a5298;
+    box-shadow:0 0 0 0.2rem rgba(42,82,152,.25);
+}
+
     </style>
 
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
 
     <div class="container">
 
-        <a class="navbar-brand"
-           href="{% url 'home' %}">
-            Lead Management
-        </a>
+       <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+    Lead Management System
+</a>
 
         <button class="navbar-toggler"
                 type="button"

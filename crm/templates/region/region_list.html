@@ -2,41 +2,102 @@
 
 {% block content %}
 
-<a href="{% url 'add_region' %}" class="btn btn-success mb-3">
-    Add Region
-</a>
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-<table class="table table-bordered table-striped">
+    <h2 class="fw-bold">
+        Region Management
+    </h2>
 
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
+    <a href="{% url 'add_region' %}"
+       class="btn btn-theme">
 
-    {% for region in regions %}
-    <tr>
+        + Add Region
 
-        <td>{{ region.regionid }}</td>
-        <td>{{ region.regionname }}</td>
+    </a>
 
-        <td>
+</div>
 
-            <a href="{% url 'edit_region' region.regionid %}"
-               class="btn btn-warning btn-sm" style="background-color: rgb(60, 196, 246); border-color: rgb(60, 196, 246);">
-                Edit
-            </a>
+<div class="card shadow-lg">
 
-            <a href="{% url 'delete_region' region.regionid %}"
-               class="btn btn-danger btn-sm">
-                Delete
-            </a>
+    <div class="card-header card-header-theme">
 
-        </td>
+        <h4 class="mb-0">
+            Region List
+        </h4>
 
-    </tr>
-    {% endfor %}
+    </div>
 
-</table>
+    <div class="card-body">
+
+        <table class="table table-striped table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Region Name</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for region in regions %}
+
+                <tr>
+
+                    <td>
+                        {{ region.regionid }}
+                    </td>
+
+                    <td>
+                        {{ region.regionname }}
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'edit_region' region.regionid %}"
+                           class="btn btn-edit btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <a href="{% url 'delete_region' region.regionid %}"
+                           class="btn btn-danger btn-sm">
+
+                            Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="3"
+                        class="text-center">
+
+                        No regions found
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
 {% endblock %}
