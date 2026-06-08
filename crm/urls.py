@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import product_api
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -19,4 +20,7 @@ urlpatterns = [
     path('leads/edit/<int:id>/',views.edit_lead,name='edit_lead'),
 
     path('leads/delete/<int:id>/',views.delete_lead,name='delete_lead'),
+
+    path('api/products/',product_api,name='product_api'),
+    path('api/products/<int:productid>/',views.product_detail_api,name='product_detail_api'),
 ]

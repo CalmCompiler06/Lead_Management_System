@@ -5,6 +5,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.db.models import Max
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+from .serializers import ProductSerializer
+from django.shortcuts import get_object_or_404
+
 def home(request):
     return render(request, 'home.html')
 
@@ -287,3 +293,27 @@ def delete_lead(request, id):
     return redirect(
         'lead_list'
     )
+
+@api_view(['GET'])
+def product_api(request):
+
+    products = Product.objects.all()
+
+    serializer = ProductSerializer(
+        products,
+        many=True
+    )
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def product_detail_api(request, productid):
+
+    product = get_object_or_404(
+        Product,
+        pk=productid
+    )
+
+    serializer = ProductSerializer(product)
+
+    return Response(serializer.data)
