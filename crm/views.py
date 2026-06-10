@@ -8,7 +8,7 @@ from django.db.models import Max
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import ProductSerializer
+from .serializers import (ProductSerializer,RegionSerializer,LeadSerializer)
 from django.shortcuts import get_object_or_404
 
 def home(request):
@@ -315,5 +315,53 @@ def product_detail_api(request, productid):
     )
 
     serializer = ProductSerializer(product)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def region_api(request):
+
+    regions = Region.objects.all()
+
+    serializer = RegionSerializer(
+        regions,
+        many=True
+    )
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def region_detail_api(request, regionid):
+
+    region = get_object_or_404(
+        Region,
+        pk=regionid
+    )
+
+    serializer = RegionSerializer(region)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def lead_api(request):
+
+    leads = Lead.objects.all()
+
+    serializer = LeadSerializer(
+        leads,
+        many=True
+    )
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def lead_detail_api(request, leadid):
+
+    lead = get_object_or_404(
+        Lead,
+        pk=leadid
+    )
+
+    serializer = LeadSerializer(lead)
 
     return Response(serializer.data)

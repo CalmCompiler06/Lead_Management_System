@@ -23,4 +23,10 @@ urlpatterns = [
 
     path('api/products/',product_api,name='product_api'),
     path('api/products/<int:productid>/',views.product_detail_api,name='product_detail_api'),
+
+    path('api/regions/',views.region_api,name='region_api'),
+    path('api/regions/<int:regionid>/',views.region_detail_api,name='region_detail_api'),
+
+    path('api/leads/',views.lead_api,name='lead_api'),
+    path('api/leads/<int:leadid>/',views.lead_detail_api,name='lead_detail_api'),
 ]
