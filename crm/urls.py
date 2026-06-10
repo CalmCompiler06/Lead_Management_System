@@ -29,4 +29,50 @@ urlpatterns = [
 
     path('api/leads/',views.lead_api,name='lead_api'),
     path('api/leads/<int:leadid>/',views.lead_detail_api,name='lead_detail_api'),
+
+    path(
+    'api/products/create/',
+    views.product_create_api,
+    name='product_create_api'),
+
+    path(
+    'api/regions/create/',
+    views.region_create_api,
+    name='region_create_api'),
+
+    path(
+    'api/leads/create/',
+    views.lead_create_api,
+    name='lead_create_api'),
+
+    path(
+    'api/products/update/<int:productid>/',
+    views.product_update_api,
+    name='product_update_api'),
+
+    path(
+    'api/products/delete/<int:productid>/',
+    views.product_delete_api,
+    name='product_delete_api'),
+
+    path(
+    'api/regions/update/<int:regionid>/',
+    views.region_update_api,
+    name='region_update_api'),
+
+    path(
+    'api/regions/delete/<int:regionid>/',
+    views.region_delete_api,
+    name='region_delete_api'),
+
+    path(
+    'api/leads/update/<int:leadid>/',
+    views.lead_update_api,
+    name='lead_update_api'),
+
+    path(
+    'api/leads/delete/<int:leadid>/',
+    views.lead_delete_api,
+    name='lead_delete_api'),
+ 
 ]

@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 from .serializers import (ProductSerializer,RegionSerializer,LeadSerializer)
 from django.shortcuts import get_object_or_404
 
+from django.db.models import Max
+
 def home(request):
     return render(request, 'home.html')
 
@@ -304,19 +306,34 @@ def product_api(request):
         many=True
     )
 
-    return Response(serializer.data)
+    return Response({
+        "success": True,
+        "count": products.count(),
+        "data": serializer.data
+    })
 
 @api_view(['GET'])
 def product_detail_api(request, productid):
 
-    product = get_object_or_404(
-        Product,
-        pk=productid
-    )
+    try:
 
-    serializer = ProductSerializer(product)
+        product = Product.objects.get(
+            pk=productid
+        )
 
-    return Response(serializer.data)
+        serializer = ProductSerializer(product)
+
+        return Response({
+            "success": True,
+            "data": serializer.data
+        })
+
+    except Product.DoesNotExist:
+
+        return Response({
+            "success": False,
+            "message": "Product Not Found"
+        })
 
 @api_view(['GET'])
 def region_api(request):
@@ -328,19 +345,34 @@ def region_api(request):
         many=True
     )
 
-    return Response(serializer.data)
+    return Response({
+        "success": True,
+        "count": regions.count(),
+        "data": serializer.data
+    })
 
 @api_view(['GET'])
 def region_detail_api(request, regionid):
 
-    region = get_object_or_404(
-        Region,
-        pk=regionid
-    )
+    try:
 
-    serializer = RegionSerializer(region)
+        region = Region.objects.get(
+            pk=regionid
+        )
 
-    return Response(serializer.data)
+        serializer = RegionSerializer(region)
+
+        return Response({
+            "success": True,
+            "data": serializer.data
+        })
+
+    except Region.DoesNotExist:
+
+        return Response({
+            "success": False,
+            "message": "Region Not Found"
+        })
 
 @api_view(['GET'])
 def lead_api(request):
@@ -352,16 +384,266 @@ def lead_api(request):
         many=True
     )
 
-    return Response(serializer.data)
+    return Response({
+        "success": True,
+        "count": leads.count(),
+        "data": serializer.data
+    })
 
 @api_view(['GET'])
 def lead_detail_api(request, leadid):
+
+    try:
+
+        lead = Lead.objects.get(
+            pk=leadid
+        )
+
+        serializer = LeadSerializer(lead)
+
+        return Response({
+            "success": True,
+            "data": serializer.data
+        })
+
+    except Lead.DoesNotExist:
+
+        return Response({
+            "success": False,
+            "message": "Lead Not Found"
+        })
+
+@api_view(['POST'])
+def product_create_api(request):
+
+    serializer = ProductSerializer(
+        data=request.data
+    )
+
+    if serializer.is_valid():
+
+        max_id = Product.objects.aggregate(
+            Max('productid')
+        )['productid__max']
+
+        serializer.save(
+            productid=(max_id or 0) + 1,
+            added_by=getpass.getuser(),
+            added_dts=timezone.now()
+        )
+
+        return Response({
+            "success": True,
+            "message": "Product Added Successfully"
+        })
+
+    return Response({
+        "success": False,
+        "message": "Failed to Add Product",
+        "errors": serializer.errors
+})
+
+@api_view(['POST'])
+def region_create_api(request):
+
+    serializer = RegionSerializer(
+        data=request.data
+    )
+
+    if serializer.is_valid():
+
+        max_id = Region.objects.aggregate(
+            Max('regionid')
+        )['regionid__max']
+
+        serializer.save(
+            regionid=(max_id or 0) + 1,
+            added_by=getpass.getuser(),
+            added_dts=timezone.now()
+        )
+
+        return Response({
+            "success": True,
+            "message": "Region Added Successfully"
+        })
+
+    return Response({
+        "success": False,
+        "message": "Failed to Add Region",
+        "errors": serializer.errors
+})
+
+
+@api_view(['POST'])
+def lead_create_api(request):
+
+    serializer = LeadSerializer(
+        data=request.data
+    )
+
+    if serializer.is_valid():
+
+        max_id = Lead.objects.aggregate(
+            Max('leadid')
+        )['leadid__max']
+
+        serializer.save(
+            leadid=(max_id or 0) + 1,
+            added_by=getpass.getuser(),
+            added_dts=timezone.now()
+        )
+
+        return Response({
+            "success": True,
+            "message": "Lead Added Successfully"
+        })
+
+    return Response({
+        "success": False,
+        "message": "Failed to Add Lead",
+        "errors": serializer.errors
+})
+
+
+@api_view(['PUT'])
+def product_update_api(request, productid):
+
+    product = get_object_or_404(
+        Product,
+        pk=productid
+    )
+
+    serializer = ProductSerializer(
+        product,
+        data=request.data
+    )
+
+    if serializer.is_valid():
+
+        serializer.save(
+            added_by=getpass.getuser(),
+            added_dts=timezone.now()
+        )
+
+        return Response({
+            "success": True,
+            "message": "Product Updated Successfully"
+        })
+
+    return Response({
+        "success": False,
+        "message": "Failed to Update Product",
+        "errors": serializer.errors
+})
+
+
+@api_view(['DELETE'])
+def product_delete_api(request, productid):
+
+    product = get_object_or_404(
+        Product,
+        pk=productid
+    )
+
+    product.delete()
+
+    return Response({
+        "success": True,
+        "message": "Product Deleted Successfully"
+    })
+
+
+@api_view(['PUT'])
+def region_update_api(request, regionid):
+
+    region = get_object_or_404(
+        Region,
+        pk=regionid
+    )
+
+    serializer = RegionSerializer(
+        region,
+        data=request.data
+    )
+
+    if serializer.is_valid():
+
+        serializer.save(
+            added_by=getpass.getuser(),
+            added_dts=timezone.now()
+        )
+
+        return Response({
+            "success": True,
+            "message": "Region Updated Successfully"
+        })
+
+    return Response({
+        "success": False,
+        "message": "Failed to Update Region",
+        "errors": serializer.errors
+})
+
+
+@api_view(['DELETE'])
+def region_delete_api(request, regionid):
+
+    region = get_object_or_404(
+        Region,
+        pk=regionid
+    )
+
+    region.delete()
+
+    return Response({
+        "success": True,
+        "message": "Region Deleted Successfully"
+    })
+
+
+@api_view(['PUT'])
+def lead_update_api(request, leadid):
 
     lead = get_object_or_404(
         Lead,
         pk=leadid
     )
 
-    serializer = LeadSerializer(lead)
+    serializer = LeadSerializer(
+        lead,
+        data=request.data
+    )
 
-    return Response(serializer.data)
+    if serializer.is_valid():
+
+        serializer.save(
+            added_by=getpass.getuser(),
+            added_dts=timezone.now()
+        )
+
+        return Response({
+            "success": True,
+            "message": "Lead Updated Successfully"
+        })
+
+    return Response({
+        "success": False,
+        "message": "Failed to Update Lead",
+        "errors": serializer.errors
+})
+
+
+@api_view(['DELETE'])
+def lead_delete_api(request, leadid):
+
+    lead = get_object_or_404(
+        Lead,
+        pk=leadid
+    )
+
+    lead.delete()
+
+    return Response({
+        "success": True,
+        "message": "Lead Deleted Successfully"
+    })
