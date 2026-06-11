@@ -508,33 +508,45 @@ def lead_create_api(request):
 @api_view(['PUT'])
 def product_update_api(request, productid):
 
-    product = get_object_or_404(
-        Product,
-        pk=productid
-    )
+    try:
 
-    serializer = ProductSerializer(
-        product,
-        data=request.data
-    )
-
-    if serializer.is_valid():
-
-        serializer.save(
-            added_by=getpass.getuser(),
-            added_dts=timezone.now()
+        product = Product.objects.get(
+            pk=productid
         )
 
+        old_data = ProductSerializer(product).data
+
+        serializer = ProductSerializer(
+            product,
+            data=request.data
+        )
+
+        if serializer.is_valid():
+
+            serializer.save(
+                added_by=getpass.getuser(),
+                added_dts=timezone.now()
+            )
+
+            return Response({
+                "success": True,
+                "message": "Product Updated Successfully",
+                "old_data": old_data,
+                "new_data": serializer.data
+            })
+
         return Response({
-            "success": True,
-            "message": "Product Updated Successfully"
+            "success": False,
+            "message": "Failed to Update Product",
+            "errors": serializer.errors
         })
 
-    return Response({
-        "success": False,
-        "message": "Failed to Update Product",
-        "errors": serializer.errors
-})
+    except Product.DoesNotExist:
+
+        return Response({
+            "success": False,
+            "message": "Product Not Found"
+        })
 
 
 @api_view(['DELETE'])
@@ -556,33 +568,45 @@ def product_delete_api(request, productid):
 @api_view(['PUT'])
 def region_update_api(request, regionid):
 
-    region = get_object_or_404(
-        Region,
-        pk=regionid
-    )
+    try:
 
-    serializer = RegionSerializer(
-        region,
-        data=request.data
-    )
-
-    if serializer.is_valid():
-
-        serializer.save(
-            added_by=getpass.getuser(),
-            added_dts=timezone.now()
+        region = Region.objects.get(
+            pk=regionid
         )
 
+        old_data = RegionSerializer(region).data
+
+        serializer = RegionSerializer(
+            region,
+            data=request.data
+        )
+
+        if serializer.is_valid():
+
+            serializer.save(
+                added_by=getpass.getuser(),
+                added_dts=timezone.now()
+            )
+
+            return Response({
+                "success": True,
+                "message": "Region Updated Successfully",
+                "old_data": old_data,
+                "new_data": serializer.data
+            })
+
         return Response({
-            "success": True,
-            "message": "Region Updated Successfully"
+            "success": False,
+            "message": "Failed to Update Region",
+            "errors": serializer.errors
         })
 
-    return Response({
-        "success": False,
-        "message": "Failed to Update Region",
-        "errors": serializer.errors
-})
+    except Region.DoesNotExist:
+
+        return Response({
+            "success": False,
+            "message": "Region Not Found"
+        })
 
 
 @api_view(['DELETE'])
@@ -604,33 +628,45 @@ def region_delete_api(request, regionid):
 @api_view(['PUT'])
 def lead_update_api(request, leadid):
 
-    lead = get_object_or_404(
-        Lead,
-        pk=leadid
-    )
+    try:
 
-    serializer = LeadSerializer(
-        lead,
-        data=request.data
-    )
-
-    if serializer.is_valid():
-
-        serializer.save(
-            added_by=getpass.getuser(),
-            added_dts=timezone.now()
+        lead = Lead.objects.get(
+            pk=leadid
         )
 
+        old_data = LeadSerializer(lead).data
+
+        serializer = LeadSerializer(
+            lead,
+            data=request.data
+        )
+
+        if serializer.is_valid():
+
+            serializer.save(
+                added_by=getpass.getuser(),
+                added_dts=timezone.now()
+            )
+
+            return Response({
+                "success": True,
+                "message": "Lead Updated Successfully",
+                "old_data": old_data,
+                "new_data": serializer.data
+            })
+
         return Response({
-            "success": True,
-            "message": "Lead Updated Successfully"
+            "success": False,
+            "message": "Failed to Update Lead",
+            "errors": serializer.errors
         })
 
-    return Response({
-        "success": False,
-        "message": "Failed to Update Lead",
-        "errors": serializer.errors
-})
+    except Lead.DoesNotExist:
+
+        return Response({
+            "success": False,
+            "message": "Lead Not Found"
+        })
 
 
 @api_view(['DELETE'])
