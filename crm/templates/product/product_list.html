@@ -8,8 +8,7 @@
         Product Management
     </h2>
 
-    <a href="{% url 'add_product' %}"
-       class="btn btn-theme">
+    <a href="{% url 'add_product' %}" class="btn btn-theme">
 
         + Add Product
 
@@ -39,6 +38,8 @@
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Status</th>
+                    <th>Added By</th>
+                    <th>Added Date</th>
                     <th>Actions</th>
 
                 </tr>
@@ -65,33 +66,34 @@
 
                     <td>
 
-                        {% if product.is_active %}
+                        {% if product.is_active == 1 %}
 
-                            <span >
-                                Active
-                            </span>
+                        Yes
 
                         {% else %}
 
-                            <span class="badge bg-danger">
-                                Inactive
-                            </span>
+                        No
 
                         {% endif %}
 
+
+                    </td>
+                    <td>
+                        {{ product.added_by }}
+                    </td>
+                    <td>
+                        {{ product.added_dts }}
                     </td>
 
                     <td>
 
-                        <a href="{% url 'edit_product' product.productid %}"
-                           class="btn btn-edit btn-sm">
+                        <a href="{% url 'edit_product' product.productid %}" class="btn btn-edit btn-sm">
 
                             Edit
 
                         </a>
 
-                        <a href="{% url 'delete_product' product.productid %}"
-                           class="btn btn-danger btn-sm">
+                        <a href="{% url 'delete_product' product.productid %}" class="btn btn-danger btn-sm">
 
                             Delete
 
@@ -105,8 +107,7 @@
 
                 <tr>
 
-                    <td colspan="5"
-                        class="text-center">
+                    <td colspan="5" class="text-center">
 
                         No products found
 

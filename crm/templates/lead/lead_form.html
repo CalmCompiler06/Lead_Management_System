@@ -16,94 +16,312 @@
 
             </div>
 
+
             <div class="card-body p-4">
+
 
                 <form method="post">
 
                     {% csrf_token %}
 
-                    <div class="row">
 
-                        <div class="col-md-6 mb-3">
-                            {{ form.personname.label_tag }}
-                            {{ form.personname }}
-                        </div>
+                    {% if form.errors %}
 
-                        <div class="col-md-6 mb-3">
-                            {{ form.gender.label_tag }}
-                            {{ form.gender }}
-                        </div>
+                    <div class="alert alert-danger">
 
-                        <div class="col-md-6 mb-3">
-                            {{ form.companyname.label_tag }}
-                            {{ form.companyname }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.contactno.label_tag }}
-                            {{ form.contactno }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.email.label_tag }}
-                            {{ form.email }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.city.label_tag }}
-                            {{ form.city }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.state.label_tag }}
-                            {{ form.state }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.productid.label_tag }}
-                            {{ form.productid }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.regionid.label_tag }}
-                            {{ form.regionid }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.statusid.label_tag }}
-                            {{ form.statusid }}
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            {{ form.leadsourceid.label_tag }}
-                            {{ form.leadsourceid }}
-                        </div>
-
-                        <div class="col-md-12 mb-3">
-                            {{ form.businessneed.label_tag }}
-                            {{ form.businessneed }}
-                        </div>
+                        Please correct the errors below.
 
                     </div>
 
+                    {% endif %}
+
+
+
+                    <div class="row">
+
+
+                        <!-- Person Name -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.personname.label_tag }}
+
+                            {{ form.personname }}
+
+                            <div class="text-danger">
+                                {{ form.personname.errors }}
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Gender -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.gender.label_tag }}
+
+                            {{ form.gender }}
+
+                            <div class="text-danger">
+                                {{ form.gender.errors }}
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Company -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.companyname.label_tag }}
+
+                            {{ form.companyname }}
+
+                            <div class="text-danger">
+                                {{ form.companyname.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Contact -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.contactno.label_tag }}
+
+                            {{ form.contactno }}
+
+                            <div class="text-danger">
+                                {{ form.contactno.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Email -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.email.label_tag }}
+
+                            {{ form.email }}
+
+                            <div class="text-danger">
+                                {{ form.email.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- City -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.city.label_tag }}
+
+                            {{ form.city }}
+
+                            <div class="text-danger">
+                                {{ form.city.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- State -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.state.label_tag }}
+
+                            {{ form.state }}
+
+                            <div class="text-danger">
+                                {{ form.state.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Territory -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.territoryid.label_tag }}
+
+                            {{ form.territoryid }}
+
+                            <div class="text-danger">
+                                {{ form.territoryid.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Product -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.productid.label_tag }}
+
+                            {{ form.productid }}
+
+                            <div class="text-danger">
+                                {{ form.productid.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Region -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.regionid.label_tag }}
+
+                            {{ form.regionid }}
+
+                            <div class="text-danger">
+                                {{ form.regionid.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Status -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.statusid.label_tag }}
+
+                            {{ form.statusid }}
+
+                            <div class="text-danger">
+                                {{ form.statusid.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Lead Source -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.leadsourceid.label_tag }}
+
+                            {{ form.leadsourceid }}
+
+                            <div class="text-danger">
+                                {{ form.leadsourceid.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Lead Generation Date -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.lead_gen_date.label_tag }}
+
+                            {{ form.lead_gen_date }}
+
+                            <div class="text-danger">
+                                {{ form.lead_gen_date.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Executive ID -->
+
+                        <div class="col-md-6 mb-3">
+
+                            {{ form.executiveid.label_tag }}
+
+                            {{ form.executiveid }}
+
+                            <div class="text-danger">
+                                {{ form.executiveid.errors }}
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- Business Need -->
+
+                        <div class="col-md-12 mb-3">
+
+                            {{ form.businessneed.label_tag }}
+
+                            {{ form.businessneed }}
+
+                            <div class="text-danger">
+                                {{ form.businessneed.errors }}
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+
+
                     <div class="d-flex gap-2 mt-3">
 
-    <button type="submit"
-            class="btn btn-theme">
 
-        Save Lead
+                        <button type="submit"
+                                class="btn btn-theme">
 
-    </button>
+                            Save Lead
 
-    <a href="{% url 'lead_list' %}"
-       class="btn btn-outline-secondary">
+                        </button>
 
-        Cancel
 
-    </a>
 
-</div>
+                        <a href="{% url 'lead_list' %}"
+                           class="btn btn-outline-secondary">
+
+                            Cancel
+
+                        </a>
+
+
+                    </div>
+
+
+
                 </form>
+
 
             </div>
 
@@ -112,5 +330,6 @@
     </div>
 
 </div>
+
 
 {% endblock %}
