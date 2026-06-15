@@ -87,16 +87,6 @@ class ProductForm(forms.ModelForm):
 
 class RegionForm(forms.ModelForm):
 
-    regionname = forms.ChoiceField(
-        choices=[],
-        widget=forms.Select(
-            attrs={
-                'class':'form-select'
-            }
-        )
-    )
-
-
     class Meta:
 
         model = Region
@@ -107,33 +97,15 @@ class RegionForm(forms.ModelForm):
             'added_dts'
         ]
 
-
-    def __init__(self,*args,**kwargs):
-
-        super().__init__(*args,**kwargs)
-
-
-        region_values = (
-            Region.objects
-            .values_list(
-                'regionname',
-                flat=True
+        widgets= {
+            
+            'regionname':forms.TextInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Enter Region Name'
+                }
             )
-            .distinct()
-        )
-
-        self.fields['regionname'].choices = [(
-            '',
-            'Select Region'
-            )]+[
-            (
-                value,
-                value
-            )
-            for value in region_values
-            if value
-        ]
-
+        }
 
     def clean_regionname(self):
 
@@ -147,7 +119,13 @@ class RegionForm(forms.ModelForm):
             raise forms.ValidationError(
                 "Region name is required"
             )
-
+        if not re.match(
+            r'^[A-Za-z ]+$',
+            regionname
+        ):
+            raise forms.ValidationError(
+                "Region name should contain only alphabets"
+            )
 
         return regionname
 

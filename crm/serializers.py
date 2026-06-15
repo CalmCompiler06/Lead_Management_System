@@ -74,18 +74,12 @@ class RegionSerializer(serializers.ModelSerializer):
                 "Region name is required"
             )
         
-        available_regions = list(Region.objects.values_list(
-            'regionname',
-            flat = True
-        ))
-
-        if value not in available_regions:
-
+        if not re.match(
+            r'^[A-Za-z ]+$',
+            value
+        ):
             raise serializers.ValidationError(
-                {
-                    "message": "Invalid region name. Please select a region from available regions.",
-                    "available_regions": available_regions
-                }
+                "Region name should contain only alphabets"
             )
         return value
 
