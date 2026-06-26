@@ -110,45 +110,42 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
 
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s %(filename)s %(lineno)d %(message)s'
+        },
+    },
+
     'handlers': {
-
         'file': {
-
             'level': 'ERROR',
-
             'class': 'logging.FileHandler',
-
-            'filename': os.path.join(
-                BASE_DIR,
-                'logs',
-                'error.log'
-            ),
+            'filename': BASE_DIR /'logs'/'error.log',
+            'formatter': 'verbose',
         },
     },
 
     'loggers': {
 
-        'django': {
-
+        'crm': {
             'handlers': ['file'],
-
             'level': 'ERROR',
-
-            'propagate': True,
+            'propagate': False,   
         },
 
-        '__main__': {
-
+        'django.request': {
             'handlers': ['file'],
-
             'level': 'ERROR',
+            'propagate': False,
+        },
+
+        'django.server': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
         },
     },
 }
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -158,8 +155,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'

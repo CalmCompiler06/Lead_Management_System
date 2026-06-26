@@ -1,0 +1,60 @@
+ERROR 2026-06-23 11:29:51,238 crm.views views.py 380 Unexpected error in region_create_api
+Traceback (most recent call last):
+  File "C:\Users\njg24\OneDrive\Desktop\LeadManagment_Project\Lead_Management\crm\views.py", line 355, in region_create_api
+    x = 1/0
+        ~^~
+ZeroDivisionError: division by zero
+ERROR 2026-06-23 11:29:51,241 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:29:51,241 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:29:51,241 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:29:51,241 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:30:10,078 crm.views views.py 380 Unexpected error in region_create_api
+Traceback (most recent call last):
+  File "C:\Users\njg24\OneDrive\Desktop\LeadManagment_Project\Lead_Management\crm\views.py", line 355, in region_create_api
+    x = 1/0
+        ~^~
+ZeroDivisionError: division by zero
+ERROR 2026-06-23 11:30:10,079 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:30:10,079 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:30:10,079 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:30:10,079 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:30:29,750 crm.views views.py 380 Unexpected error in region_create_api
+Traceback (most recent call last):
+  File "C:\Users\njg24\OneDrive\Desktop\LeadManagment_Project\Lead_Management\crm\views.py", line 355, in region_create_api
+    x = 1/0
+        ~^~
+ZeroDivisionError: division by zero
+ERROR 2026-06-23 11:30:29,751 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:30:29,751 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:30:29,751 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:30:29,751 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:31:02,888 crm.views views.py 380 Unexpected error in region_create_api
+Traceback (most recent call last):
+  File "C:\Users\njg24\OneDrive\Desktop\LeadManagment_Project\Lead_Management\crm\views.py", line 355, in region_create_api
+    x = 1/0
+        ~^~
+ZeroDivisionError: division by zero
+ERROR 2026-06-23 11:31:02,889 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:31:02,889 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:31:02,890 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:31:02,890 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:32:11,567 crm.views views.py 380 Unexpected error in region_create_api
+Traceback (most recent call last):
+  File "C:\Users\njg24\OneDrive\Desktop\LeadManagment_Project\Lead_Management\crm\views.py", line 355, in region_create_api
+    x = 1/0
+        ~^~
+ZeroDivisionError: division by zero
+ERROR 2026-06-23 11:32:11,569 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:32:11,569 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:32:11,569 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:32:11,569 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:32:53,401 crm.views views.py 380 Unexpected error in region_create_api
+Traceback (most recent call last):
+  File "C:\Users\njg24\OneDrive\Desktop\LeadManagment_Project\Lead_Management\crm\views.py", line 355, in region_create_api
+    x = 1/0
+        ~^~
+ZeroDivisionError: division by zero
+ERROR 2026-06-23 11:32:53,403 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:32:53,403 django.request log.py 249 Internal Server Error: /api/regions/create/
+ERROR 2026-06-23 11:32:53,404 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51
+ERROR 2026-06-23 11:32:53,404 django.server log.py 249 "POST /api/regions/create/ HTTP/1.1" 500 51

@@ -1,9 +1,13 @@
 from django.urls import path
 from . import views
 from .views import product_api
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    
+    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('home/', views.home, name='home'),
     path('products/', views.product_list, name='product_list'),
     path('products/add/', views.add_product, name='add_product'),
     path('products/edit/<int:id>/', views.edit_product, name='edit_product'),
@@ -74,5 +78,10 @@ urlpatterns = [
     'api/leads/delete/<int:leadid>/',
     views.lead_delete_api,
     name='lead_delete_api'),
- 
+    path('products/bulk-upload/', views.product_bulk_upload, name='product_bulk_upload'),
+    path('leads/bulk-upload/', views.lead_bulk_upload, name='lead_bulk_upload'),
+    path('leads/export/csv/', views.lead_export_csv, name='lead_export_csv'),
+    path('leads/export/excel/', views.lead_export_excel, name='lead_export_excel'),
+    path('products/export/csv/', views.product_export_csv, name='product_export_csv'),
+    path('regions/export/csv/', views.region_export_csv, name='region_export_csv'),
 ]
