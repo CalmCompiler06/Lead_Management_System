@@ -1,0 +1,41 @@
+Error in lead_list view: division by zero
+Traceback (most recent call last):
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\leadapp\views.py", line 574, in lead_list
+    x = 10/0 # force error
+        ~~^~
+ZeroDivisionError: division by zero
+Error in lead_list view: division by zero
+Traceback (most recent call last):
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\leadapp\views.py", line 644, in lead_list
+    x = 10/0
+        ~~^~
+ZeroDivisionError: division by zero
+Error in lead_list view: division by zero
+Traceback (most recent call last):
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\leadapp\views.py", line 644, in lead_list
+    x = 10/0
+        ~~^~
+ZeroDivisionError: division by zero
+Product Bulk Upload Error: Product() got unexpected keyword arguments: 'Category', 'IsActive'
+Traceback (most recent call last):
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\leadapp\views.py", line 978, in product_bulk_upload
+    Product.objects.create(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        ProductName=product_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        Category=category,
+        ^^^^^^^^^^^^^^^^^^
+        IsActive=is_active
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\venv\Lib\site-packages\django\db\models\query.py", line 667, in create
+    obj = self.model(**kwargs)
+  File "C:\Users\ishit\OneDrive\Desktop\LeadManagement\Lead_Management\venv\Lib\site-packages\django\db\models\base.py", line 590, in __init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Product() got unexpected keyword arguments: 'Category', 'IsActive'

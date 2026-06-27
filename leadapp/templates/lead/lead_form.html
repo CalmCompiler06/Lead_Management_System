@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 800px;">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body bg-primary text-white py-3 rounded">
+            <h3 class="mb-0 fw-semibold" style="font-family: sans-serif;">
+                {% if form.instance.pk %}Edit Lead{% else %}Add Lead{% endif %}
+            </h3>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-5">
+        <div class="card-body p-4">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label for="id_City" class="form-label fw-medium text-dark">City:</label>
+                    <input 
+                        type="text" 
+                        name="City" 
+                        id="id_City" 
+                        class="form-control bg-light py-2 {% if form.City.errors %}is-invalid{% endif %}" 
+                        value="{{ form.City.value|default_if_none:'' }}"
+                        placeholder="Enter city name..."
+                    >
+                    {% if form.City.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in form.City.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_Territory" class="form-label fw-medium text-dark">Territory:</label>
+                    <select name="Territory" id="id_Territory" class="form-select bg-light py-2 {% if form.Territory.errors %}is-invalid{% endif %}">
+                        <option value="">---------</option>
+                        {% for territory in territories %}
+                            <option value="{{ territory.pk }}" {% if form.instance.Territory_id == territory.pk %}selected{% endif %}>
+                                {{ territory.TerritoryName }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.Territory.errors %}
+                        <div class="text-danger small mt-1">territory id is required</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_Regionid" class="form-label fw-medium text-dark">Regionid:</label>
+                    <select name="Regionid" id="id_Regionid" class="form-select bg-light py-2 {% if form.Regionid.errors %}is-invalid{% endif %}">
+                        <option value="">---------</option>
+                        {% for region in regions %}
+                            <option value="{{ region.pk }}" {% if form.instance.Regionid_id == region.pk %}selected{% endif %}>
+                                {{ region.RegionName }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.Regionid.errors %}
+                        <div class="text-danger small mt-1">regionid is required</div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex gap-2 mt-4 pt-2">
+                    <button type="submit" class="btn btn-primary px-4 py-2">Save Lead</button>
+                    <a href="{% url 'lead_list' %}" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

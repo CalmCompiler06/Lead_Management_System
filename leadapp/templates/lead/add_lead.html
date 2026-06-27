@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Styling to mirror the frameless look from your reference interface */
+    .frameless-container {
+        background-color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+    }
+
+    /* Core 2-Column CSS Grid */
+    .lead-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 50px;
+        row-gap: 12px; /* Matches the vertical text flow spacing */
+    }
+
+    /* Wraps each label + input pair */
+    .form-group-block {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+    }
+
+    /* Keeps full-width layouts spanning cleanly across both columns */
+    .grid-span-full {
+        grid-column: span 2;
+    }
+
+    /* Label Typography matching the photo */
+    .form-group-block label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333333;
+        margin-bottom: 6px;
+    }
+
+    /* Input & Select Box customizations */
+    .form-group-block .form-control,
+    .form-group-block .form-select {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: #fafafa;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    /* Simulated red validation layout helper text */
+    .validation-hint {
+        color: #d9534f;
+        font-size: 12px;
+        margin-top: 4px;
+        font-weight: 400;
+    }
+</style>
+
+<div class="container mt-4 mb-5">
+    <div class="frameless-container">
+        
+        <h2 class="mb-4" style="font-weight: 500; color: #212529;">Lead Entry Form</h2>
+        
+        <form method="POST" action="{% url 'add_lead' %}">
+            {% csrf_token %}
+            
+            <div class="lead-form-grid">
+                
+                <div class="form-group-block">
+                    <label>Email:</label>
+                    <input type="email" name="Email" class="form-control" placeholder="person80@mail.com">
+                </div>
+
+                <div class="form-group-block">
+                    <label>City:</label>
+                    <input type="text" name="City" class="form-control" placeholder="city6">
+                </div>
+
+
+                <div class="form-group-block">
+                    <label>State:</label>
+                    <input type="text" name="State" class="form-control" placeholder="state4">
+                </div>
+
+                <div class="form-group-block">
+                    <label>Territory:</label>
+                    <select name="TerritoryID" class="form-select">
+                        <option value="">----------</option>
+                        {% for territory in territories %}
+                            <option value="{{ territory.TerritoryID }}">{{ territory.TerritoryName }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="validation-hint">territory id is required</div>
+                </div>
+
+
+                <div class="form-group-block">
+                    <label>Productid:</label>
+                    <select name="LeadSourceID" class="form-select">
+                        <option value="">----------</option>
+                        <option value="1">1 - CRM Software</option>
+                        <option value="2">2 - Hospital ERP</option>
+                        <option value="3">3 - Accounting Software</option>
+                        <option value="4">4 - ECG Machine</option>
+                        <option value="5">5 - X-Ray Machine</option>
+                        <option value="6">6 - MRI Scanner</option>
+                        <option value="3">7 - Diagnostic Monitor</option>
+                        <option value="4">8 - Laptop</option>
+                        <option value="5">9 - Tablet</option>
+                        <option value="6">10 -POS Terminal</option>
+                        <option value="5">11 -Implementation Service</option>
+                        <option value="6">12 -AMC Support</option>
+                    </select>
+                    <div class="validation-hint">productid is required</div>
+                </div>
+
+                <div class="form-group-block">
+                    <label>Regionid:</label>
+                    <select name="RegionID" class="form-select">
+                        <option value="">----------</option>
+                        {% for region in regions %}
+                            <option value="{{ region.RegionID }}">{{ region.RegionName }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="validation-hint">regionid is required</div>
+                </div>
+
+
+                <div class="form-group-block">
+    <label class="form-label fw-bold">Statusid:</label>
+    <select name="StatusID" class="form-select">
+        <option value="">----------</option>
+        {% for status in statuses %}
+            <option value="{{ status.StatusID }}">{{ status.StatusName }}</option>
+        {% endfor %}
+    </select>
+    <div class="validation-hint">statusid is required</div>
+</div>
+
+                <div class="form-group-block">
+    <label class="form-label fw-bold">Leadsourceid:</label>
+    <select name="LeadSourceID" class="form-select">
+        <option value="">----------</option>
+        {% for source in lead_source %}
+            <option value="{{ source.LeadSourceID }}">{{ source.LeadSourceID }} - {{ source.LeadSourceName }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+                <div class="form-group-block">
+                    <label>Lead gen date:</label>
+                    <input type="date" name="LeadGenDate" class="form-control">
+                    <div class="validation-hint">Lead generation date is required</div>
+                </div>
+
+                <div class="form-group-block d-none d-md-block"></div>
+
+
+                <div class="form-group-block grid-span-full">
+                    <label>Businessneed:</label>
+                    <textarea name="BusinessNeed" rows="3" class="form-control"></textarea>
+                    <div class="validation-hint">Business need is required</div>
+                </div>
+
+
+                <div class="grid-span-full pt-2">
+                    <button type="submit" class="btn btn-primary px-4 me-2">Save Lead</button>
+                    <a href="{% url 'lead_list' %}" class="btn btn-secondary px-4">Cancel</a>
+                </div>
+
+            </div>
+        </form>
+        
+    </div>
+</div>
+{% endblock content %}

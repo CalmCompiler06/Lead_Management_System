@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Region Analytics</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+    <div class="container mt-4">
+
+    <h2 class="text-center mb-4">
+        Region Analytics Dashboard
+    </h2>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Total Regions</h6>
+                    <h2>{{ total_regions }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Total Leads</h6>
+                    <h2>{{ total_leads }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h6>Top Region</h6>
+                    <h5>
+                        {{ top_region.RegionID__RegionName }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+    <div class="card-header bg-primary text-white">
+
+        Region Wise Lead Count
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-center">
+
+            <div style="width:700px;height:350px">
+
+                <canvas id="regionBarChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow">
+
+    <div class="card-header bg-success text-white">
+
+        Region Contribution
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-center">
+
+            <div style="width:400px;height:400px">
+
+                <canvas id="regionPieChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+{{ labels|json_script:"region-labels" }}
+{{ counts|json_script:"region-counts" }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const labels =
+JSON.parse(
+document.getElementById('region-labels').textContent
+);
+
+const counts =
+JSON.parse(
+document.getElementById('region-counts').textContent
+);
+
+new Chart(
+document.getElementById('regionBarChart'),
+{
+    type: 'bar',
+
+    data: {
+
+        labels: labels,
+
+        datasets: [{
+
+            label: 'Leads',
+
+            data: counts,
+
+            maxBarThickness: 30
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        scales: {
+
+            x: {
+                ticks: {
+                    maxRotation: 90,
+                    minRotation: 90
+                }
+            },
+
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+}
+);
+
+</script>
+<script>
+new Chart(
+document.getElementById('regionPieChart'),
+{
+    type: 'pie',
+
+    data: {
+
+        labels: labels,
+
+        datasets: [{
+
+            data: counts,
+
+            backgroundColor: [
+                '#36A2EB',
+                '#FF6384',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40'
+            ]
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false
+
+    }
+}
+);
+
+</script>
+</body>
+</html>
