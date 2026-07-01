@@ -17,11 +17,30 @@ from .serializers import (ProductSerializer,RegionSerializer,LeadSerializer)
 from django.contrib.auth.decorators import login_required
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
+from django.contrib.auth.forms import AuthenticationForm
 
 logger = logging.getLogger(__name__)
 @login_required
 def home(request):
     return render(request, 'home.html')
+
+def login_view(request):
+
+    form = AuthenticationForm(request, data=request.POST or None)
+
+    form.fields["username"].widget.attrs.update({
+        "class": "form-control",
+        "placeholder": "Enter username"
+    })
+
+    form.fields["password"].widget.attrs.update({
+        "class": "form-control",
+        "placeholder": "Enter password"
+    })
+
+    if request.method == "POST":
+        if form.is_valid():
+            ...
 
 @login_required
 def product_list(request):
