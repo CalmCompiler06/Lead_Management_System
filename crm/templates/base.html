@@ -8,10 +8,22 @@
 
     <style>
 
-        body{
-            background:#f4f7fc;
-            font-family:'Segoe UI',sans-serif;
-        }
+        /* ===== GRID BACKGROUND FOR ALL PAGES ===== */
+body {
+    background-color: #f4f7fc;
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(42, 82, 152, 0.15) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(42, 82, 152, 0.15) 1px,
+            transparent 1px
+        );
+    background-size: 60px 60px; /* BIG SQUARES */
+}
 
         .navbar{
             background:linear-gradient(135deg,#1e3c72,#2a5298);
@@ -102,7 +114,9 @@ label{
     border-color:#2a5298;
     box-shadow:0 0 0 0.2rem rgba(42,82,152,.25);
 }
-
+.navbar .dropdown-toggle{
+    font-weight:600;
+}
 .errorlist{
 
     color:red;
@@ -110,6 +124,12 @@ label{
     list-style:none;
     padding:0;
 
+}
+.table-scroll {
+    overflow-x: auto;
+}
+.table-responsive {
+    overflow-x: auto;
 }
 
     </style>
@@ -138,35 +158,56 @@ label{
         <div class="collapse navbar-collapse"
              id="navbarNav">
 
-             <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-center">
 
-    <li class="nav-item">
-        <a class="nav-link"
-           href="{% url 'home' %}">
-            Home
+{% if user.is_authenticated %}
+
+    <!-- Username + Logout dropdown -->
+    <li class="nav-item dropdown me-3">
+        <a class="nav-link dropdown-toggle fw-semibold"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown">
+            Hi, {{ user.username }}
         </a>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="dropdown-item text-danger">
+                        Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Normal menu items -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link"
-           href="{% url 'product_list' %}">
-            Products
-        </a>
+        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link"
-           href="{% url 'region_list' %}">
-            Regions
-        </a>
+        <a class="nav-link" href="{% url 'region_list' %}">Regions</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link"
-           href="{% url 'lead_list' %}">
-            Leads
-        </a>
+        <a class="nav-link" href="{% url 'lead_list' %}">Leads</a>
     </li>
+
+{% else %}
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Login</a>
+    </li>
+
+{% endif %}
 
 </ul>
             
@@ -178,7 +219,14 @@ label{
 </nav>
 
 <div class="container page-container">
-
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
     {% block content %}
     {% endblock %}
 

@@ -14,7 +14,26 @@ class ProductSerializer(serializers.ModelSerializer):
             'added_by',
             'added_dts'
         )
+    def validate(self, data):
+        productname = data.get("productname")
+        categoryid = data.get("categoryid")
 
+        qs = Product.objects.filter(
+            productname__iexact=productname,
+            categoryid=categoryid
+        )
+
+    # exclude self during update
+        if self.instance:
+            qs = qs.exclude(productid=self.instance.productid)
+
+        if qs.exists():
+            raise serializers.ValidationError(
+                {"productname": "Product with this name already exists in this category"}
+            )
+
+        return data
+    
     def validate_productname(self,value):
         if not value:
             raise serializers.ValidationError(
@@ -66,21 +85,19 @@ class RegionSerializer(serializers.ModelSerializer):
             'added_by',
             'added_dts'
         )
-    def validate_regionname(self,value):
+    def validate_regionname(self, value):
 
         if not value:
+            raise serializers.ValidationError("Region name is required")
 
-            raise serializers.ValidationError(
-                "Region name is required"
-            )
-        
-        if not re.match(
-            r'^[A-Za-z ]+$',
-            value
-        ):
-            raise serializers.ValidationError(
-                "Region name should contain only alphabets"
-            )
+        qs = Region.objects.filter(regionname__iexact=value)
+
+        if self.instance:
+            qs = qs.exclude(regionid=self.instance.regionid)
+
+        if qs.exists():
+            raise serializers.ValidationError("Region already exists")
+
         return value
 
 
@@ -94,7 +111,36 @@ class LeadSerializer(serializers.ModelSerializer):
             'added_by',
             'added_dts'
         )
-
+    def validate(self,data):
+        required_fields = [
+            'productid',
+            'regionid',
+            'territoryid',
+            'statusid',
+            'leadsourceid',
+            'businessneed',
+            'lead_gen_date'
+        ]
+        for field in required_fields:
+            if not data.get(field):
+                raise serializers.ValidationError(
+                    {field: f"{field} is required"}
+                )
+        contactno = data.get("contactno")
+        email = data.get("email")
+        qs = Lead.objects.all()
+        if self.instance:
+            qs = qs.exclude(leadid=self.instance.leadid)
+        if contactno and qs.filter(contactno=contactno).exists():
+            raise serializers.ValidationError(
+                {"contactno":"Lead with this cntact number already exists"}
+            )
+        if email and qs.filter(email__iexact=email).exists():
+            raise serializers.ValidationError(
+                {"email":"Lead with this wmail already exists"}
+            )
+        return data
+    
     def validate_personname(self,value):
         if not value:
             raise serializers.ValidationError(
@@ -205,28 +251,6 @@ class LeadSerializer(serializers.ModelSerializer):
             )
         return value
     
-    def validate(self,data):
-
-        required_fields = [
-            'productid',
-            'regionid',
-            'territoryid',
-            'statusid',
-            'leadsourceid',
-            'businessneed',
-            'lead_gen_date'
-        ]
-        for field in required_fields:
-
-            if not data.get(field):
-
-                raise serializers.ValidationError(
-                    {
-                        field:
-                        f"{field} is required"
-                    }
-                )
-        return data
     def validate_businessneed(self,value):
         if not value:
             raise serializers.ValidationError(

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow-lg">
+    <div class="card-header card-header-theme">
+        <h4>Product Bulk Upload</h4>
+    </div>
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- File field -->
+            <div class="mb-3">
+                <label class="form-label">File</label>
+                <input type="file"
+                       name="file"
+                       class="form-control"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-theme">
+                Upload
+            </button>
+
+            <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById("id_file").addEventListener("change", function () {
+        const fileName = this.files.length > 0 ? this.files[0].name : "No file chosen";
+        document.getElementById("file-name").innerText = fileName;
+    });
+</script>
+
+{% endblock %}

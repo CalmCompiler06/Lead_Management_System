@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+        <div class="card shadow-lg border-0">
+
+            <div class="card-header card-header-theme">
+                <h4>Lead Bulk Upload</h4>
+            </div>
+
+            <div class="card-body">
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- File input (styled, no duplicate label issue) -->
+                    <div class="mb-3">
+                        <label class="form-label">Select Excel File</label>
+                        {{ form.file }}
+                    </div>
+
+                    <button type="submit" class="btn btn-theme">
+                        Upload
+                    </button>
+
+                    <a href="{% url 'lead_list' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

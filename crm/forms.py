@@ -84,47 +84,71 @@ class ProductForm(forms.ModelForm):
             )
 
         return categoryid
+    def clean(self):
+        cleaned_data = super().clean()
+
+        productname = cleaned_data.get('productname')
+        categoryid = cleaned_data.get('categoryid')
+
+        if productname and categoryid:
+            qs = Product.objects.filter(
+                productname__iexact=productname,
+                categoryid=categoryid
+            )
+
+            if self.instance and self.instance.pk:
+                qs = qs.exclude(pk=self.instance.pk)
+
+            if qs.exists():
+                self.add_error(
+                    'productname',
+                    "Product with this name already exists in this category"
+                )
+
+        return cleaned_data
+
+class ProductBulkUploadForm(forms.Form):
+    file = forms.FileField()
+
+class LeadBulkUploadForm(forms.Form):
+    file = forms.FileField()
 
 class RegionForm(forms.ModelForm):
 
     class Meta:
-
         model = Region
-
         exclude = [
             'regionid',
             'added_by',
             'added_dts'
         ]
-
-        widgets= {
-            
-            'regionname':forms.TextInput(
+        widgets = {
+            'regionname': forms.TextInput(
                 attrs={
-                    'class':'form-control',
-                    'placeholder':'Enter Region Name'
+                    'class': 'form-control',
+                    'placeholder': 'Enter Region Name'
                 }
             )
         }
 
     def clean_regionname(self):
-
-        regionname = self.cleaned_data.get(
-            'regionname'
-        )
-
+        regionname = self.cleaned_data.get('regionname')
 
         if not regionname:
-
             raise forms.ValidationError(
                 "Region name is required"
             )
-        if not re.match(
-            r'^[A-Za-z ]+$',
-            regionname
-        ):
+
+        if not re.match(r'^[A-Za-z ]+$', regionname):
             raise forms.ValidationError(
                 "Region name should contain only alphabets"
+            )
+
+        if Region.objects.filter(
+            regionname__iexact=regionname
+        ).exists():
+            raise forms.ValidationError(
+                "Region with this name already exists"
             )
 
         return regionname
@@ -356,6 +380,8 @@ class LeadForm(forms.ModelForm):
     
     def clean(self):
         cleaned_data = super().clean()
+
+    # Required dropdown validations
         required_fields = [
             'gender',
             'territoryid',
@@ -364,12 +390,30 @@ class LeadForm(forms.ModelForm):
             'statusid',
             'leadsourceid'
         ]
+
         for field in required_fields:
-
             if not cleaned_data.get(field):
+                self.add_error(field, f"{field} is required")
 
-                self.add_error(
-                    field,
-                    f"{field} is required"
-                )
+    # Duplicate check
+        contactno = cleaned_data.get('contactno')
+        email = cleaned_data.get('email')
+
+        qs = Lead.objects.all()
+        if self.instance and self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if contactno and qs.filter(contactno=contactno).exists():
+            self.add_error(
+                'contactno',
+                "Lead with this contact number already exists"
+            )
+
+        if email and qs.filter(email__iexact=email).exists():
+            self.add_error(
+                'email',
+                "Lead with this email already exists"
+            )
+
         return cleaned_data
+    
